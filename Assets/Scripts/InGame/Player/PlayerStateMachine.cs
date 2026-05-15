@@ -4,7 +4,10 @@ public class PlayerStateMachine : MobStateMachine
 {
     public Player_LocomotionState player_LocomotionStateTemplate;
     [HideInInspector] public Player_LocomotionState player_LocomotionState;
-     public override void InitStates()
+    [HideInInspector] public Vector2 lastPointerWorldPosition;
+    [HideInInspector] public bool hasPointerWorldPosition;
+
+    public override void InitStates()
     {
         base.InitStates();
         InitStateFromBase(player_LocomotionStateTemplate, out player_LocomotionState);
@@ -22,6 +25,12 @@ public class PlayerStateMachine : MobStateMachine
     public virtual void InputRequest(string req = "")
     {
     }
+    public void SetPointerWorldPosition(Vector2 pointerWorldPosition)
+    {
+        lastPointerWorldPosition = pointerWorldPosition;
+        hasPointerWorldPosition = true;
+    }
+
     public override void ChangeState(State newState, bool force = false)
     {
         base.ChangeState(newState, force);

@@ -5,21 +5,42 @@ public class Player : Mob
     public float horizontalInput;
     public LayerMask groundLayer;
     public ParticleSystem dustParticle;
+    public float dustMovementThreshold = 0.05f;
 
     [Header("Jump Settings")]
     public float coyoteTime = 0.15f;
 
     private float coyoteTimeCounter;
+    private bool isDustPlaying = false;
+
+    protected override void Start()
+    {
+        base.Start();
+    }
 
     void Update()
     {
         UpdateCoyoteTime();
         Anime();
+        DustControl();
+    }
+    void DustControl()
+    {
+        bool isMoving = rgb2d.linearVelocity.sqrMagnitude > dustMovementThreshold * dustMovementThreshold;
+
+        if (isMoving && isDustPlaying == false)
+        {
+            PlayDustEffect();
+        }
+        else if (isMoving == false && isDustPlaying == true)
+        {
+            StopDustEffect();
+        }
     }
 
     void Anime()
     {
-        //anim.SetFloat("HorizontalInput", Mathf.Abs(horizontalInput));
+        anim.SetFloat("HorizontalInput", Mathf.Abs(horizontalInput));
     }
 
     void UpdateCoyoteTime()
@@ -34,7 +55,6 @@ public class Player : Mob
     {
         if ((horizontalInput > 0 && facingRight == -1) || (horizontalInput < 0 && facingRight == 1))
         {
-            PlayDustEffect();
             MobFlip();
         }
     }
@@ -68,5 +88,14 @@ public class Player : Mob
     {
         if (dustParticle != null)
             dustParticle.Play();
+
+        isDustPlaying = true;
+    }
+    public void StopDustEffect()
+    {
+        if (dustParticle != null)
+            dustParticle.Stop();
+        
+        isDustPlaying = false;
     }
 }

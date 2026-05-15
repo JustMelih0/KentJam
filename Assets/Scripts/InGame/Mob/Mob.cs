@@ -70,4 +70,16 @@ public class Mob : MonoBehaviour
     protected virtual void OnCollisionExit2D(Collision2D other) {
         stateMachine.currentState?.CollisionExit(other);
     }
+    public void ResetAnimatorTriggers()
+    {
+        if (anim == null) return;
+
+        foreach (AnimatorControllerParameter parameter in anim.parameters)
+        {
+            if (parameter.type == AnimatorControllerParameterType.Trigger)
+            {
+                anim.ResetTrigger(parameter.nameHash);
+            }
+        }
+    }
 }

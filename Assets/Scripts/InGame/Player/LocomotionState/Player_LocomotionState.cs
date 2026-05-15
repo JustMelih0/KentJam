@@ -17,7 +17,8 @@ public class Player_LocomotionState : PlayerState
     public override void EnterState()
     {
         base.EnterState();
-        //mob.anim.SetTrigger("LocomotionState");
+        mob.ResetAnimatorTriggers();
+        mob.anim.SetTrigger("LocomotionState");
     }
 
     public override void InitState(StateMachine stateMachine, Mob defaultMob)
@@ -30,7 +31,7 @@ public class Player_LocomotionState : PlayerState
     {
         base.Execute();
         player.FaceToInput();
-        //player.anim.SetFloat("VerticalSpeed", player.rgb2d.linearVelocityY);
+        player.anim.SetFloat("VerticalSpeed", player.rgb2d.linearVelocityY);
 
         if (lastInput == 0 && player.horizontalInput != 0)
         {

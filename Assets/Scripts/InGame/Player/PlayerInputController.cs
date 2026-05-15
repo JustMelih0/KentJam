@@ -52,7 +52,10 @@ public class PlayerInputController : MonoBehaviour
       if (!canMove) return;
 
       if(context.started)
-         playerStateMachine.InputRequest("AttackState");
+      {
+         CachePointerWorldPosition();
+         playerStateMachine.InputRequest("BlinkState");
+      }
    }
    public void JumpInput(InputAction.CallbackContext context)
    {
@@ -93,6 +96,15 @@ public class PlayerInputController : MonoBehaviour
          GameManager.Instance.playerInteractController.TryInteract();
       }
     }
+
+   private void CachePointerWorldPosition()
+   {
+      if (Pointer.current == null || Camera.main == null) return;
+
+      Vector2 pointerScreenPosition = Pointer.current.position.ReadValue();
+      Vector3 pointerWorldPosition = Camera.main.ScreenToWorldPoint(pointerScreenPosition);
+      playerStateMachine.SetPointerWorldPosition(pointerWorldPosition);
+   }
 
    
 
