@@ -4,6 +4,7 @@ using UnityEngine;
 public class Bear_Mob : DefaultMob, IActivate
 {
     public Transform targetMovePoint;
+    public GameObject eyeParticle;
 
     private Transform playerOnBear;
     private Vector2 lastPosition;

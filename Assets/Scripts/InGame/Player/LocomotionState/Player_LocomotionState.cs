@@ -40,10 +40,13 @@ public class Player_LocomotionState : PlayerState
 
     public override void PhysicExecute()
     {
-        if (mob?.mob_HealthBase?.isHitting == false)
-            player.rgb2d.linearVelocityX = player.horizontalInput * player.stats.moveSpeed;
-        else
-            player.rgb2d.linearVelocityX = 0;
+        if (mob?.mob_HealthBase?.isHitting == true)
+        {
+            GravityControl();
+            return;
+        }
+
+        player.rgb2d.linearVelocityX = player.horizontalInput * player.stats.moveSpeed;
 
         if (player.transform.position.y < -15f)
             mob.mob_HealthBase.TakeDamage(1000, mob.transform.position);

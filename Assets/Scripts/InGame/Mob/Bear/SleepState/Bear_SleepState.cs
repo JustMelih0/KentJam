@@ -40,6 +40,8 @@ public class Bear_SleepState : MobState
     {
         if(wake) return;
 
+        Instantiate(bear_Mob.eyeParticle, mob.rootPoint.position, Quaternion.identity);
+
         mob.FaceToTarget(bear_Mob.targetMovePoint.position);
         if(noWakeAnim == false)
             mob.anim.SetTrigger("Wake");

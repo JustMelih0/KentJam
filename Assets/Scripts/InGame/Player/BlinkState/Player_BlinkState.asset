@@ -15,3 +15,5 @@ MonoBehaviour:
   projectilePrefab: {fileID: 199811282076116945, guid: 67fed073b55c96344b82ca95125e074b, type: 3}
   projectileEffect: {fileID: 3208973177120010635, guid: c0ef55831229ec34d812e6d62bba4808, type: 3}
   projectileSpeed: 18
+  recoilForce: 1
+  recoilStunDuration: 0.15

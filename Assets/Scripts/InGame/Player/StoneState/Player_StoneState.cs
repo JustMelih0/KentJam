@@ -25,6 +25,7 @@ public class Player_StoneState : PlayerState
         {
             mob.transform.position = statue.statueStonePoint.position;
         }
+        player.FaceToTarget(statue.transform.position);
 
         mob.rgb2d.linearVelocity = Vector2.zero;
         mob.rgb2d.constraints |= RigidbodyConstraints2D.FreezePositionX | RigidbodyConstraints2D.FreezePositionY;

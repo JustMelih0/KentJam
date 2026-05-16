@@ -187,6 +187,7 @@ MonoBehaviour:
   footRadius: 0
   isGrounded: 0
   targetMovePoint: {fileID: 7222375314775022150}
+  eyeParticle: {fileID: 4400950932305210653, guid: 9c701b6c50e9d5849bb3049ee8f1e036, type: 3}
 --- !u!114 &7294569686813203413
 MonoBehaviour:
   m_ObjectHideFlags: 0

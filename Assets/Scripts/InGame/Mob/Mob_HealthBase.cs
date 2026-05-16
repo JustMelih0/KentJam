@@ -11,6 +11,7 @@ public class Mob_HealthBase : MonoBehaviour, IHitable
     public Material impactMaterial;
     private Material defaultMaterial;
     private Coroutine hitCoroutine;
+    private Coroutine stunCoroutine;
 
     public event Action<float, float, Vector2> damagedEvent;
     public event Action deadEvent;
@@ -61,6 +62,17 @@ public class Mob_HealthBase : MonoBehaviour, IHitable
 
 
     }
+
+    public void Stun(float duration)
+    {
+        if (stunCoroutine != null)
+        {
+            StopCoroutine(stunCoroutine);
+        }
+
+        stunCoroutine = StartCoroutine(StunTimer(duration));
+    }
+
     protected virtual void MobDead()
     {
         deadEvent?.Invoke();
@@ -81,5 +93,13 @@ public class Mob_HealthBase : MonoBehaviour, IHitable
         isHitting = false;
         spriteRenderer.material = defaultMaterial;
         hitCoroutine = null;
+    }
+
+    private IEnumerator StunTimer(float duration)
+    {
+        isHitting = true;
+        yield return new WaitForSeconds(duration);
+        isHitting = false;
+        stunCoroutine = null;
     }
 }

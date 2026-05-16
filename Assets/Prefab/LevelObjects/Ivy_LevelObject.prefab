@@ -291,4 +291,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AO_Ivy
   ivyObject: {fileID: 6448159041520786057}
+  eyeParticle: {fileID: 4400950932305210653, guid: 9c701b6c50e9d5849bb3049ee8f1e036, type: 3}
   deActivateTime: 5

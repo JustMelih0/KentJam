@@ -6,6 +6,8 @@ public class Player_BlinkState : PlayerState
     public Projectile projectilePrefab;
     public GameObject projectileEffect;
     public float projectileSpeed = 10f;
+    [SerializeField] private float recoilForce = 4f;
+    [SerializeField] private float recoilStunDuration = 0.15f;
 
     public override void EnterState()
     {
@@ -31,6 +33,13 @@ public class Player_BlinkState : PlayerState
             : spawnPosition + Vector2.right * player.facingRight;
 
         player.FaceToTarget(targetPosition);
+
+        Vector2 direction = targetPosition - spawnPosition;
+        if (direction.sqrMagnitude <= Mathf.Epsilon)
+            direction = Vector2.right * player.facingRight;
+
+        player.rgb2d.AddForce(-direction.normalized * recoilForce, ForceMode2D.Impulse);
+        player.mob_HealthBase.Stun(recoilStunDuration);
     }
     public void Blink()
     {
