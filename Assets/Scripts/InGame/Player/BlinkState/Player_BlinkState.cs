@@ -4,6 +4,7 @@ using UnityEngine;
 public class Player_BlinkState : PlayerState
 {
     public Projectile projectilePrefab;
+    public GameObject projectileEffect;
     public float projectileSpeed = 10f;
 
     public override void EnterState()
@@ -49,7 +50,15 @@ public class Player_BlinkState : PlayerState
 
         player.FaceToTarget(targetPosition);
 
-        Projectile projectile = Instantiate(projectilePrefab, spawnPosition, Quaternion.identity);
+        float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+        Quaternion projectileRotation = Quaternion.Euler(0f, 0f, angle);
+
+        if (projectileEffect != null)
+        {
+            Instantiate(projectileEffect, spawnPosition, projectileRotation);
+        }
+
+        Projectile projectile = Instantiate(projectilePrefab, spawnPosition, projectileRotation);
         projectile.SetupProjectile(direction, projectileSpeed);
     }
     public void BlinkEnd()

@@ -3,6 +3,7 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "Bear_SleepState", menuName = "SO/States/Mob/Bear/SleepState", order = 0)]
 public class Bear_SleepState : MobState
 {
+    [SerializeField] protected bool noWakeAnim = false;
     private const float StopDistance = 0.1f;
 
     private bool wake = false;
@@ -17,6 +18,7 @@ public class Bear_SleepState : MobState
     {
         base.EnterState();
         mob.rgb2d.linearVelocityX = 0f;
+        mob.ResetAnimatorTriggers();
         mob.anim.SetTrigger("LocomotionState");
     }
     public override void Execute()
@@ -36,12 +38,18 @@ public class Bear_SleepState : MobState
     }
     public void Wake()
     {
+        if(wake) return;
+
         mob.FaceToTarget(bear_Mob.targetMovePoint.position);
-        mob.anim.SetTrigger("Wake");
+        if(noWakeAnim == false)
+            mob.anim.SetTrigger("Wake");
+        else moveTarget = true; 
         wake = true;
     }
     public void Sleep()
     {
+        if(!wake) return;
+
         wake = false;
         moveTarget = false;
     }

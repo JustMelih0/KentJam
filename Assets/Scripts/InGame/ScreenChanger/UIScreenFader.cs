@@ -9,8 +9,10 @@ public class UIScreenFader : MonoBehaviour
     public static UIScreenFader Instance { get; private set; }
 
     [Header("References")]
-    [SerializeField] private Image fadeImage;
+    [SerializeField] private Image upperImage;
+    [SerializeField] private Image lowerImage;
     [SerializeField] private DialogueSO openDialogue;
+    [SerializeField] private DialogueSO[] openDialogues;
 
     [Header("Settings")]
     [SerializeField] private float openDelay = 0.2f;
@@ -19,6 +21,13 @@ public class UIScreenFader : MonoBehaviour
     [SerializeField] private Ease closeEase = Ease.OutCubic;
 
     private Tween currentTween;
+    private RectTransform upperRect;
+    private RectTransform lowerRect;
+    private Vector2 upperClosedPosition;
+    private Vector2 lowerClosedPosition;
+    private Vector2 upperOpenPosition;
+    private Vector2 lowerOpenPosition;
+    private bool positionsCached;
 
     private void Awake()
     {
@@ -29,6 +38,7 @@ public class UIScreenFader : MonoBehaviour
         }
 
         Instance = this;
+        CachePositions();
     }
 
     public void Open()
@@ -38,39 +48,56 @@ public class UIScreenFader : MonoBehaviour
 
     public void Open(Action onComplete)
     {
-        if (fadeImage == null)
+        if (CachePositions() == false)
             return;
 
         currentTween?.Kill();
-
-        SetAlpha(1f);
+        SetImagesActive(true);
+        SetClosedInstant();
 
         currentTween = DOVirtual.DelayedCall(openDelay, () =>
         {
-            currentTween = fadeImage
-                .DOFade(0f, duration)
-                .SetEase(openEase)
-                .OnComplete(() =>
-                {
-                    if(openDialogue) DialogueManager.Instance.StartDialogue(openDialogue);
-                    onComplete?.Invoke();
-                });
-        });
+            Sequence sequence = DOTween.Sequence();
+            sequence.Join(upperRect.DOAnchorPos(upperOpenPosition, duration).SetEase(openEase));
+            sequence.Join(lowerRect.DOAnchorPos(lowerOpenPosition, duration).SetEase(openEase));
+            sequence.OnComplete(() =>
+            {
+                SetImagesActive(false);
+                onComplete?.Invoke();
+            });
+
+            currentTween = sequence.SetLink(gameObject, LinkBehaviour.KillOnDisable);
+        }).SetLink(gameObject, LinkBehaviour.KillOnDisable);
     }
 
     public void Close()
     {
-        FadeTo(1f, duration, closeEase, null);
+        Close(null);
     }
 
     public void Close(Action onComplete)
     {
-        FadeTo(1f, duration, closeEase, onComplete);
+        if (CachePositions() == false)
+            return;
+
+        currentTween?.Kill();
+        SetImagesActive(true);
+        AudioManager.Instance?.PlaySFX("cut");
+
+        Sequence sequence = DOTween.Sequence();
+        sequence.Join(upperRect.DOAnchorPos(upperClosedPosition, duration).SetEase(closeEase));
+        sequence.Join(lowerRect.DOAnchorPos(lowerClosedPosition, duration).SetEase(closeEase));
+        sequence.OnComplete(() =>
+        {
+            onComplete?.Invoke();
+        });
+
+        currentTween = sequence.SetLink(gameObject, LinkBehaviour.KillOnDisable);
     }
 
     public void CloseAndLoadScene(string sceneName)
     {
-        FadeTo(1f, duration, closeEase, () =>
+        Close(() =>
         {
             SceneManager.LoadScene(sceneName);
         });
@@ -78,39 +105,69 @@ public class UIScreenFader : MonoBehaviour
 
     public void SetOpenInstant()
     {
+        if (CachePositions() == false)
+            return;
+
         currentTween?.Kill();
-        SetAlpha(0f);
+        SetImagesActive(false);
+        upperRect.anchoredPosition = upperOpenPosition;
+        lowerRect.anchoredPosition = lowerOpenPosition;
     }
 
     public void SetClosedInstant()
     {
-        currentTween?.Kill();
-        SetAlpha(1f);
-    }
-
-    private void FadeTo(float targetAlpha, float time, Ease ease, Action onComplete)
-    {
-        if (fadeImage == null)
+        if (CachePositions() == false)
             return;
 
         currentTween?.Kill();
-
-        currentTween = fadeImage
-            .DOFade(targetAlpha, time)
-            .SetEase(ease)
-            .OnComplete(() =>
-            {
-                onComplete?.Invoke();
-            });
+        SetImagesActive(true);
+        upperRect.anchoredPosition = upperClosedPosition;
+        lowerRect.anchoredPosition = lowerClosedPosition;
     }
 
-    private void SetAlpha(float alpha)
+    private bool CachePositions()
     {
-        if (fadeImage == null)
-            return;
+        if (upperImage == null || lowerImage == null)
+            return false;
 
-        Color c = fadeImage.color;
-        c.a = alpha;
-        fadeImage.color = c;
+        if (upperRect == null)
+            upperRect = upperImage.rectTransform;
+
+        if (lowerRect == null)
+            lowerRect = lowerImage.rectTransform;
+
+        if (positionsCached)
+            return true;
+
+        upperClosedPosition = upperRect.anchoredPosition;
+        lowerClosedPosition = lowerRect.anchoredPosition;
+
+        float upperTravelDistance = GetTravelDistance(upperRect);
+        float lowerTravelDistance = GetTravelDistance(lowerRect);
+
+        upperOpenPosition = upperClosedPosition + Vector2.up * upperTravelDistance;
+        lowerOpenPosition = lowerClosedPosition + Vector2.down * lowerTravelDistance;
+        positionsCached = true;
+        return true;
+    }
+
+    private float GetTravelDistance(RectTransform rectTransform)
+    {
+        return rectTransform.rect.height + 50f;
+    }
+
+    private void SetImagesActive(bool isActive)
+    {
+        if (upperImage != null && upperImage.gameObject.activeSelf != isActive)
+            upperImage.gameObject.SetActive(isActive);
+
+        if (lowerImage != null && lowerImage.gameObject.activeSelf != isActive)
+            lowerImage.gameObject.SetActive(isActive);
+    }
+
+    private void OnDisable()
+    {
+        currentTween?.Kill();
+        currentTween = null;
     }
 }

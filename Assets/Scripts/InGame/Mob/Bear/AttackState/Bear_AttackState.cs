@@ -6,6 +6,7 @@ public class Bear_AttackState : MobState
     public override void EnterState()
     {
         base.EnterState();
+        mob.ResetAnimatorTriggers();
         mob.anim.SetTrigger("AttackState");
     }
     public override void PhysicExecute()

@@ -26,6 +26,8 @@ public class Projectile : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D collision)
     {
+        if (setup == false) return;
+
         if (collision.TryGetComponent(out IActivate activate))
         {
             activate.Activate();

@@ -59,6 +59,7 @@ public class Player : Mob
     void Anime()
     {
         anim.SetFloat("HorizontalInput", Mathf.Abs(horizontalInput));
+        anim.SetBool("isGrounded", IsGrounded());
     }
 
     void UpdateCoyoteTime()

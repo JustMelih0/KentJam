@@ -6,6 +6,8 @@ using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviour
 {
     public GameObject playerRef;
+    public Statue statue;
+    public string nextSceneName = "Test1";
     [HideInInspector] public Player playerMob;
     [HideInInspector] public PlayerStateMachine playerStateMachine;
     [HideInInspector] public PlayerInputController playerInputController;
@@ -69,6 +71,10 @@ public class GameManager : MonoBehaviour
     {
         string currentSceneName = SceneManager.GetActiveScene().name;
         UIScreenFader.Instance.CloseAndLoadScene(currentSceneName);
+    }
+    public void NextScene()
+    {
+        UIScreenFader.Instance.CloseAndLoadScene(nextSceneName);
     }
 
 

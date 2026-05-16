@@ -56,7 +56,9 @@ Assets/Scripts/InGame/
   DialogTrigger.cs
   DialogueManager.cs
   DialogueSO.cs
+ Effect/Effect.cs
  GameManager/GameManager.cs
+ Hand/Hand.cs
  Interfaces/
   IActivate.cs
   I_Interactable.cs
@@ -92,11 +94,13 @@ Assets/Scripts/InGame/
   PlayerInteractController.cs
   PlayerState.cs
   PlayerStateMachine.cs
+  StoneState/Player_StoneState.cs
  Projectile/Projectile.cs
  ScreenChanger/UIScreenFader.cs
  State/
   State.cs
   StateMachine.cs
+ Statue/Statue.cs
 Assets/Scripts/UI/
  AudioManager.cs
  CreditsmManager.cs

@@ -16,11 +16,12 @@ GameObject:
   - component: {fileID: 4874671353700295643}
   - component: {fileID: 6896906452528912529}
   - component: {fileID: 7006612800331415615}
-  - component: {fileID: 5221455558361079525}
   - component: {fileID: 8416867834590964333}
+  - component: {fileID: 2180648127064834233}
+  - component: {fileID: 7056017454326457935}
   m_Layer: 0
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -124,7 +125,9 @@ MonoBehaviour:
   lastPointerWorldPosition: {x: 0, y: 0}
   hasPointerWorldPosition: 0
   player_BlinkStateTemplate: {fileID: 11400000, guid: b7e173f628eb3b643a44fb0dfbb4acd8, type: 2}
+  player_StoneStateTemplate: {fileID: 11400000, guid: 896ccc9464304444aa6a320503de66e7, type: 2}
   player_BlinkState: {fileID: 0}
+  player_StoneState: {fileID: 0}
 --- !u!50 &8161561178308315020
 Rigidbody2D:
   serializedVersion: 5
@@ -345,27 +348,27 @@ MonoBehaviour:
       m_Calls: []
     m_ActionId: 9caa3d8a-6b2f-4e8e-8bad-6ede561bd9be
     m_ActionName: UI/TrackedDeviceOrientation
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 6896906452528912529}
+        m_TargetAssemblyTypeName: PlayerInputController, Assembly-CSharp
+        m_MethodName: InteractInput
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: fe14a943-8aa2-46e8-aad4-94512fe5f95e
+    m_ActionName: 'Player/Interact[/Keyboard/e]'
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: 
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
---- !u!114 &5221455558361079525
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2255338319440783477}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: beba5c435178f0744afccd81cf04c1a2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Mob_HealthBase
-  currentHealth: 0
-  deathParticle: {fileID: 0}
-  impactMaterial: {fileID: 0}
-  isHitting: 0
 --- !u!70 &8416867834590964333
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
@@ -403,6 +406,39 @@ CapsuleCollider2D:
   m_Offset: {x: 0.0128804445, y: -0.1803261}
   m_Size: {x: 0.6819513, y: 0.97268105}
   m_Direction: 0
+--- !u!114 &2180648127064834233
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2255338319440783477}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e6106ff88871b2f45a9708687e372b72, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerHealth
+  currentHealth: 0
+  deathParticle: {fileID: 0}
+  impactMaterial: {fileID: 0}
+  isHitting: 0
+--- !u!114 &7056017454326457935
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2255338319440783477}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5423d563b46acb84aae51dfdd0e8e5a9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerInteractController
+  interactLayer:
+    serializedVersion: 2
+    m_Bits: 256
+  interactRadius: 0.6
+  interactPoint: {fileID: 6518565745181941811}
 --- !u!1 &2722417128997006007
 GameObject:
   m_ObjectHideFlags: 0
@@ -459,7 +495,7 @@ Transform:
   m_GameObject: {fileID: 7014309034871050728}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0.237, y: -0.139, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -543,6 +579,18 @@ PrefabInstance:
     - target: {fileID: 476358503386990437, guid: 3c030868a4bb05846ae129eaa129b5a8, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2782328927425887496, guid: 3c030868a4bb05846ae129eaa129b5a8, type: 3}
+      propertyPath: InitialModule.startColor.maxColor.b
+      value: 0.24519402
+      objectReference: {fileID: 0}
+    - target: {fileID: 2782328927425887496, guid: 3c030868a4bb05846ae129eaa129b5a8, type: 3}
+      propertyPath: InitialModule.startColor.maxColor.g
+      value: 0.39210683
+      objectReference: {fileID: 0}
+    - target: {fileID: 2782328927425887496, guid: 3c030868a4bb05846ae129eaa129b5a8, type: 3}
+      propertyPath: InitialModule.startColor.maxColor.r
+      value: 0.5471698
       objectReference: {fileID: 0}
     - target: {fileID: 7876613794002839317, guid: 3c030868a4bb05846ae129eaa129b5a8, type: 3}
       propertyPath: m_Name
