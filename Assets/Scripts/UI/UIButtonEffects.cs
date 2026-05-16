@@ -24,23 +24,18 @@ public class UIButtonEffects : MonoBehaviour, IPointerEnterHandler, IPointerExit
 
         if (isShake)
         {
-            StartRandomIdleShake();
+            StartEqualIdleShake();
         }
     }
 
-    private void StartRandomIdleShake()
+    private void StartEqualIdleShake()
     {
-
-        float randomDelay = Random.Range(0f, 1f);
-
-        float startAngle = Random.Range(-shakeStrength, shakeStrength);
-        transform.localRotation = Quaternion.Euler(0, 0, startAngle);
+        transform.localRotation = Quaternion.identity;
 
 
         transform.DOLocalRotate(new Vector3(0, 0, -shakeStrength), shakeDuration)
             .SetEase(Ease.InOutSine)
-            .SetLoops(-1, LoopType.Yoyo)
-            .SetDelay(randomDelay);
+            .SetLoops(-1, LoopType.Yoyo);
     }
 
     public void OnPointerEnter(PointerEventData eventData)
