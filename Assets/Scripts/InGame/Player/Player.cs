@@ -2,6 +2,9 @@ using UnityEngine;
 
 public class Player : Mob
 {
+    private const float MinVerticalVelocity = -10f;
+    private const float MaxVerticalVelocity = 10f;
+
     public float horizontalInput;
     public LayerMask groundLayer;
     public ParticleSystem dustParticle;
@@ -18,12 +21,27 @@ public class Player : Mob
         base.Start();
     }
 
+    private void FixedUpdate()
+    {
+        ClampVerticalVelocity();
+    }
+
     void Update()
     {
         UpdateCoyoteTime();
         Anime();
         DustControl();
     }
+
+    private void ClampVerticalVelocity()
+    {
+        rgb2d.linearVelocityY = Mathf.Clamp(
+            rgb2d.linearVelocityY,
+            MinVerticalVelocity,
+            MaxVerticalVelocity
+        );
+    }
+
     void DustControl()
     {
         bool isMoving = rgb2d.linearVelocity.sqrMagnitude > dustMovementThreshold * dustMovementThreshold;

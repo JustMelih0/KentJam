@@ -11,8 +11,6 @@ public class Player_LocomotionState : PlayerState
     public float dustCooldown = 0.2f;
 
     private float defaultGravity = 1;
-    private float lastInput = 0;
-    private float lastDustTime = -999f;
 
     public override void EnterState()
     {
@@ -32,13 +30,6 @@ public class Player_LocomotionState : PlayerState
         base.Execute();
         player.FaceToInput();
         player.anim.SetFloat("VerticalSpeed", player.rgb2d.linearVelocityY);
-
-        if (lastInput == 0 && player.horizontalInput != 0)
-        {
-            TryPlayDustEffect();
-        }
-
-        lastInput = player.horizontalInput;
     }
 
     public override void ExitState()
@@ -80,18 +71,8 @@ public class Player_LocomotionState : PlayerState
                 {
                     player.rgb2d.linearVelocityY = jumpForce;
                     player.ConsumeCoyoteTime();
-                    TryPlayDustEffect();
                 }
             }
         }
-    }
-
-    private void TryPlayDustEffect()
-    {
-        if (Time.time - lastDustTime < dustCooldown)
-            return;
-
-        lastDustTime = Time.time;
-        player.PlayDustEffect();
     }
 }

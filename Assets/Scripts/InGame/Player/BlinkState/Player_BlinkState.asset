@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: Player_BlinkState
   m_EditorClassIdentifier: Assembly-CSharp::Player_BlinkState
   projectilePrefab: {fileID: 199811282076116945, guid: 67fed073b55c96344b82ca95125e074b, type: 3}
-  projectileSpeed: 10
+  projectileSpeed: 18

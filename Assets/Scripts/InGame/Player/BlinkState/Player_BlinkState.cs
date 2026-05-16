@@ -15,6 +15,21 @@ public class Player_BlinkState : PlayerState
     }
     public override void PhysicExecute()
     {
+        playerStateMachine.player_LocomotionState.PhysicExecute();
+    }
+
+    public void BlinkStart()
+    {
+        
+        Vector2 spawnPosition = player.attackPoint != null
+            ? player.attackPoint.position
+            : player.transform.position;
+
+        Vector2 targetPosition = playerStateMachine.hasPointerWorldPosition
+            ? playerStateMachine.lastPointerWorldPosition
+            : spawnPosition + Vector2.right * player.facingRight;
+
+        player.FaceToTarget(targetPosition);
     }
     public void Blink()
     {
@@ -39,7 +54,6 @@ public class Player_BlinkState : PlayerState
     }
     public void BlinkEnd()
     {
-        Debug.Log("Blink End");
         machine.canTransationState = true;
         machine.StateRequest("BlinkEnd");
     }
@@ -48,6 +62,6 @@ public class Player_BlinkState : PlayerState
         base.AnimationEvent(actionName);
         if (actionName == "Blink") Blink();
         else if(actionName == "BlinkEnd") BlinkEnd();
-
+        else if(actionName == "BlinkStart") BlinkStart();
     }
 }

@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: db00e9717955d124eb11cd4f8371bb8e, type: 3}
   m_Name: Player_LocomotionState
   m_EditorClassIdentifier: Assembly-CSharp::Player_LocomotionState
-  jumpForce: 6
+  jumpForce: 8
   gravityMultiplier: 2.5
   dustCooldown: 0.5

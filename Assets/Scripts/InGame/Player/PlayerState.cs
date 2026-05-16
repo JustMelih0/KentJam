@@ -5,15 +5,6 @@ public abstract class PlayerState : State
 {
     protected Player player;
     protected PlayerStateMachine playerStateMachine;
-    protected bool isStateActive = false;
-    public override void EnterState()
-    {
-        isStateActive = true;
-    }
-    public override void ExitState()
-    {
-        isStateActive = false;
-    }
     public override void InitState(StateMachine stateMachine, Mob defaultMob)
     {
         base.InitState(stateMachine, defaultMob);

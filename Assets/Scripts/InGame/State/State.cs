@@ -6,13 +6,20 @@ public abstract class State : ScriptableObject
     protected Mob mob;
     float tickTimer;
     protected virtual float TickInterval => 0.25f;
+    protected bool isStateActive = false;
     public virtual void InitState(StateMachine stateMachine, Mob defaultMob)
     {
         machine = stateMachine;
         mob = defaultMob;
     }
-    public abstract void EnterState();
-    public abstract void ExitState();
+    public virtual void EnterState()
+    {
+        isStateActive = true;
+    }
+    public virtual void ExitState()
+    {
+        isStateActive = false;
+    }
     public virtual void Execute()
     {
         TickUpdate();
