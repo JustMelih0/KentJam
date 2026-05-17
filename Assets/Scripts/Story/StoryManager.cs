@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using DG.Tweening;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
@@ -12,6 +13,7 @@ public class StoryManager : MonoBehaviour
     public float transitionDuration = 0.5f;
     public float startScale = 1.08f;
     public float endScale = 0.95f;
+    private bool sceneChange = false;
 
     private Sequence storySequence;
 
@@ -57,8 +59,29 @@ public class StoryManager : MonoBehaviour
 
     public void StartGame()
     {
-        AudioManager.Instance.PlaySFX("mouse-click");
+        if(sceneChange) return;
+
+        sceneChange = true;
+        AudioManager.Instance.PlaySFX("play");
         UIScreenFader.Instance.CloseAndLoadScene("Level1");
 
+    }
+    public void StartInput(InputAction.CallbackContext context)
+    {
+        if (context.started)
+        {
+            StartGame();
+        }
+    }
+    public void MenuInput(InputAction.CallbackContext context)
+    {
+        if(sceneChange) return;
+
+        if (context.started)
+        {
+            sceneChange = true;
+            AudioManager.Instance.PlaySFX("mouse-click");
+            UIScreenFader.Instance.CloseAndLoadScene("Menu");
+        }
     }
 }
