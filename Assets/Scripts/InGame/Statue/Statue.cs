@@ -41,6 +41,7 @@ public class Statue : MonoBehaviour, I_Interactable
         Vector3 upperTargetPosition = upperStartPosition + Vector3.up * moveAmount;
         upperCollider.isTrigger = true;
 
+        AudioManager.Instance.PlaySFX("door");
         if (moveDuration <= 0f)
         {
             lowerStatue.transform.position = lowerTargetPosition;
@@ -69,7 +70,8 @@ public class Statue : MonoBehaviour, I_Interactable
         {
             animator.SetTrigger("open");
         }
-
+        CameraController.Instance.Shake(0.1f, 0.3f);
+        AudioManager.Instance.PlaySFX("door_before");
         StartCoroutine(OpenStatue());
         StartCoroutine(OpenUpperLight());
     }

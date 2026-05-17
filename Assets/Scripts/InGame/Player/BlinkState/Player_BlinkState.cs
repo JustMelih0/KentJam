@@ -38,12 +38,18 @@ public class Player_BlinkState : PlayerState
         if (direction.sqrMagnitude <= Mathf.Epsilon)
             direction = Vector2.right * player.facingRight;
 
-        player.rgb2d.AddForce(-direction.normalized * recoilForce, ForceMode2D.Impulse);
-        player.mob_HealthBase.Stun(recoilStunDuration);
+        if(player.IsGrounded())
+        {
+            player.rgb2d.AddForce(-direction.normalized * recoilForce, ForceMode2D.Impulse);
+            player.mob_HealthBase.Stun(recoilStunDuration);
+        }
+
     }
     public void Blink()
     {
         if (projectilePrefab == null) return;
+
+        AudioManager.Instance.PlaySFX("force");
 
         Vector2 spawnPosition = player.attackPoint != null
             ? player.attackPoint.position

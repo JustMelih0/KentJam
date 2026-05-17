@@ -3,7 +3,7 @@ using UnityEngine;
 public class Player : Mob
 {
     private const float MinVerticalVelocity = -10f;
-    private const float MaxVerticalVelocity = 10f;
+    private const float MaxVerticalVelocity = 15f;
 
     public float horizontalInput;
     public LayerMask groundLayer;

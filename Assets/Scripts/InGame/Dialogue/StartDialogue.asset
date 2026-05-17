@@ -1,0 +1,46 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a5364947c29c4e1429fab97c4c46ff63, type: 3}
+  m_Name: StartDialogue
+  m_EditorClassIdentifier: Assembly-CSharp::DialogueSO
+  dialogueLines:
+  - dialogueText: "Uykuya dalm\u0131\u015F topraklar\u0131 yeniden uyan\u0131\u015Fa
+      ge\xE7ir Bibi"
+    typeSpeed: 0.05
+    dialogueDuration: 2
+    waitForTrigger: 0
+    isShaking: 0
+    textColor: {r: 1, g: 1, b: 1, a: 1}
+    fontSize: 80
+  - dialogueText: "Uykuya ge\xE7mi\u015F \xE7al\u0131ya imleci getirip \"Sol t\u0131k\"
+      yap ve uyan\u0131\u015F\u0131n\u0131 sa\u011Fla"
+    typeSpeed: 0.05
+    dialogueDuration: 3
+    waitForTrigger: 1
+    isShaking: 0
+    textColor: {r: 1, g: 1, b: 1, a: 1}
+    fontSize: 80
+  - dialogueText: "\xC7al\u0131 yeniden uykuya dalmadan \xF6nce ko\u015F!"
+    typeSpeed: 0.05
+    dialogueDuration: 3
+    waitForTrigger: 1
+    isShaking: 0
+    textColor: {r: 1, g: 0, b: 0, a: 1}
+    fontSize: 100
+  - dialogueText: "\u015Eimdi heykele yakla\u015F\u0131p \"E\" bas ve uyan\u0131\u015F
+      ge\xE7ir"
+    typeSpeed: 0.05
+    dialogueDuration: 3
+    waitForTrigger: 1
+    isShaking: 0
+    textColor: {r: 0.07971394, g: 1, b: 0, a: 1}
+    fontSize: 80

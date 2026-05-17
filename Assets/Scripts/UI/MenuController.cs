@@ -46,7 +46,8 @@ public class MenuController : MonoBehaviour
 
     public void ChangeScene(string sceneName)
     {
-        AudioManager.Instance.PlaySFX("mouse-click");
+        if(sceneName == "Level1") AudioManager.Instance.PlaySFX("play");
+        else AudioManager.Instance.PlaySFX("mouse-click");
         UIScreenFader.Instance.CloseAndLoadScene(sceneName);
     }
 

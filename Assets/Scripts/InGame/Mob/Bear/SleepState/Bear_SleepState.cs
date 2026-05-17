@@ -26,6 +26,11 @@ public class Bear_SleepState : MobState
         base.Execute();
         if(moveTarget == true) mob.anim.SetFloat("HorizontalInput", 1);
         else mob.anim.SetFloat("HorizontalInput", 0);
+
+        if(moveTarget)
+        {
+            bear_Mob.head.SetActive(true);
+        }
     }
     public override void PhysicExecute()
     {
@@ -40,6 +45,9 @@ public class Bear_SleepState : MobState
     {
         if(wake) return;
 
+        AudioManager.Instance.PlaySFX("wakeup");
+        CameraController.Instance.Shake(0.1f, 0.3f);
+
         Instantiate(bear_Mob.eyeParticle, mob.rootPoint.position, Quaternion.identity);
 
         mob.FaceToTarget(bear_Mob.targetMovePoint.position);
@@ -47,20 +55,28 @@ public class Bear_SleepState : MobState
             mob.anim.SetTrigger("Wake");
         else moveTarget = true; 
         wake = true;
+
+        bear_Mob.sleepParticle.Stop();
     }
     public void Sleep()
     {
         if(!wake) return;
 
+        bear_Mob.sleepParticle.Play();
         wake = false;
         moveTarget = false;
+        bear_Mob.head.SetActive(false);
     }
     public override void AnimationEvent(string actionName)
     {
         base.AnimationEvent(actionName);
         if (actionName == "Wake")
         {
+            bear_Mob.head.SetActive(true);
             moveTarget = true;
+        }else if (actionName == "sleep")
+        {
+            AudioManager.Instance.PlaySFX("bear_sleep");
         }
     }
     public void Move()
@@ -81,8 +97,10 @@ public class Bear_SleepState : MobState
         {
             wake = false;
             moveTarget = false;
+            bear_Mob.head.SetActive(false);
             mob.anim.SetFloat("HorizontalInput", 0);
             mob.rgb2d.linearVelocityX = 0f;
+            bear_Mob.sleepParticle.Play();
             return;
         }
 
@@ -92,6 +110,7 @@ public class Bear_SleepState : MobState
     public override void ExitState()
     {
         base.ExitState();
+        bear_Mob.head.SetActive(false);
         mob.rgb2d.linearVelocityX = 0f;
     }
 }

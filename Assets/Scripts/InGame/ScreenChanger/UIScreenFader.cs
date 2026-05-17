@@ -12,7 +12,6 @@ public class UIScreenFader : MonoBehaviour
     [SerializeField] private Image upperImage;
     [SerializeField] private Image lowerImage;
     [SerializeField] private DialogueSO openDialogue;
-    [SerializeField] private DialogueSO[] openDialogues;
 
     [Header("Settings")]
     [SerializeField] private float openDelay = 0.2f;
@@ -63,6 +62,7 @@ public class UIScreenFader : MonoBehaviour
             sequence.OnComplete(() =>
             {
                 SetImagesActive(false);
+                PlayOpenDialogue();
                 onComplete?.Invoke();
             });
 
@@ -82,7 +82,7 @@ public class UIScreenFader : MonoBehaviour
 
         currentTween?.Kill();
         SetImagesActive(true);
-        AudioManager.Instance?.PlaySFX("cut");
+        AudioManager.Instance.PlaySFX("fadein");
 
         Sequence sequence = DOTween.Sequence();
         sequence.Join(upperRect.DOAnchorPos(upperClosedPosition, duration).SetEase(closeEase));
@@ -163,6 +163,14 @@ public class UIScreenFader : MonoBehaviour
 
         if (lowerImage != null && lowerImage.gameObject.activeSelf != isActive)
             lowerImage.gameObject.SetActive(isActive);
+    }
+
+    private void PlayOpenDialogue()
+    {
+        if (openDialogue == null || StoryTextManager.Instance == null)
+            return;
+
+        StoryTextManager.Instance.PlayText(openDialogue);
     }
 
     private void OnDisable()

@@ -5,6 +5,8 @@ public class Bear_Mob : DefaultMob, IActivate
 {
     public Transform targetMovePoint;
     public GameObject eyeParticle;
+    public GameObject head;
+    public ParticleSystem sleepParticle;
 
     private Transform playerOnBear;
     private Vector2 lastPosition;

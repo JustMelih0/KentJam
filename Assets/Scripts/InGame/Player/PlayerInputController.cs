@@ -13,13 +13,11 @@ public class PlayerInputController : MonoBehaviour
 
     void OnEnable()
     {
-      DialogueManager.DialogueEnterEvent += DialogueEnter;
-      DialogueManager.DialogueExitEvent += DialogueExit;
+
     }
     void OnDisable()
     {
-      DialogueManager.DialogueEnterEvent -= DialogueEnter;
-      DialogueManager.DialogueExitEvent -= DialogueExit;
+
     }
    public void DialogueEnter(DialogueSO dialogueSO)
    {

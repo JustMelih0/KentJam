@@ -15,6 +15,8 @@ public class Player_StoneState : PlayerState
     public override void EnterState()
     {
         base.EnterState();
+        machine.canTransationState = false;
+        GameManager.Instance.playerInputController.DisControls();
         isWalkingToStatuePoint = false;
         stoneOutStarted = false;
         mob.ResetAnimatorTriggers();

@@ -22,13 +22,24 @@ public class CameraController : MonoBehaviour
     public Transform maxYPoint;
 
     private Vector3 velocity = Vector3.zero;
+    private Vector3 shakeOffset;
+    private float shakeTimer;
+    private float shakeDuration;
+    private float shakeStrength;
+    public static CameraController Instance;
+
+    void Awake()
+    {
+        if(Instance == null) Instance = this;
+        else Destroy(gameObject);
+    }
 
     private void LateUpdate()
     {
         if (target == null) return;
 
         Vector3 targetPosition = target.position + offset;
-        Vector3 currentPosition = transform.position;
+        Vector3 currentPosition = transform.position - shakeOffset;
 
         float targetX = followX ? targetPosition.x : currentPosition.x;
         float targetY = followY ? targetPosition.y : currentPosition.y;
@@ -63,10 +74,32 @@ public class CameraController : MonoBehaviour
             }
         }
 
+        UpdateShake();
+
         transform.position = new Vector3(
             smoothPosition.x,
             smoothPosition.y,
             offset.z
-        );
+        ) + shakeOffset;
+    }
+
+    public void Shake(float duration = 0.1f, float strength = 0.1f)
+    {
+        shakeDuration = duration;
+        shakeStrength = strength;
+        shakeTimer = duration;
+    }
+
+    private void UpdateShake()
+    {
+        if (shakeTimer > 0f)
+        {
+            float power = shakeTimer / shakeDuration;
+            shakeOffset = Random.insideUnitCircle * shakeStrength * power;
+            shakeTimer -= Time.deltaTime;
+            return;
+        }
+
+        shakeOffset = Vector3.zero;
     }
 }

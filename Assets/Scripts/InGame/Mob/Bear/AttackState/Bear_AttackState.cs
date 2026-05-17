@@ -23,6 +23,7 @@ public class Bear_AttackState : MobState
         base.AnimationEvent(actionName);
         if (actionName == "Attack")
         {
+            AudioManager.Instance.PlaySFX("bear_crash");
             Attack();
         }
         else if (actionName == "AttackEnd")

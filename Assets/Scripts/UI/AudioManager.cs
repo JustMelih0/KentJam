@@ -15,9 +15,7 @@ public class AudioManager : MonoBehaviour
 
     private readonly List<string> levelMusicNames = new List<string>
     {
-        "GameMusic2",
-        "GameMusic3",
-        "GameMusic4"
+        "Level1"
     };
 
     private void Awake()
@@ -62,9 +60,9 @@ public class AudioManager : MonoBehaviour
         }
         else if (currentScene == "Menu")
         {
-            if (currentMusicName != "GameMusic1" || !musicSource.isPlaying)
+            if (currentMusicName != "MenuMusic" || !musicSource.isPlaying)
             {
-                PlayMusic("GameMusic1");
+                PlayMusic("MenuMusic");
             }
         }
     }

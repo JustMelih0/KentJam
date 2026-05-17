@@ -37,11 +37,13 @@ public class GameManager : MonoBehaviour
     }
     void OnEnable()
     {
-        playerHealth.deadEvent += PlayerDead;
+        if (playerHealth != null)
+            playerHealth.deadEvent += PlayerDead;
     }
     void OnDisable()
     {
-        playerHealth.deadEvent -= PlayerDead;
+        if (playerHealth != null)
+            playerHealth.deadEvent -= PlayerDead;
     }
     void Start()
     {
@@ -52,20 +54,31 @@ public class GameManager : MonoBehaviour
         playerRef.TryGetComponent(out playerStateMachine);
         playerRef.TryGetComponent(out playerInputController);
         playerRef.TryGetComponent(out playerInteractController);
+        playerRef.TryGetComponent(out playerHealth);
     }
     public void RestartGame(InputAction.CallbackContext context)
     {
         if (context.started && restartingGame == false)
         {
-            Restart();
+            PlayerDead();
+        }
+    }
+    public void MainMenu(InputAction.CallbackContext context)
+    {
+        if (context.started)
+        {
+            UIScreenFader.Instance.CloseAndLoadScene("Menu");
         }
     }
     public void PlayerDead()
     {
         if (restartingGame) return;
 
+        AudioManager.Instance.PlaySFX("mouse-click");
+
         restartingGame = true;
-        Invoke(nameof(Restart), 1f);
+        LockPlayerForRestart();
+        Invoke(nameof(Restart), 0.2f);
     }
     public void Restart()
     {
@@ -80,4 +93,17 @@ public class GameManager : MonoBehaviour
 
 
 
+    private void LockPlayerForRestart()
+    {
+        playerInputController?.DisControls();
+
+        if (playerRef == null) return;
+
+        if (playerMob != null && playerMob.rgb2d != null)
+        {
+            playerMob.rgb2d.linearVelocity = Vector2.zero;
+            playerMob.rgb2d.angularVelocity = 0f;
+            playerMob.rgb2d.constraints |= RigidbodyConstraints2D.FreezePosition;
+        }
+    }
 }

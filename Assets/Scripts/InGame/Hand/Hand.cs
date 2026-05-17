@@ -17,6 +17,7 @@ public class Hand : MonoBehaviour
     {
         if (player == null) return;
         if (!player.TryGetComponent(out Rigidbody2D playerRigidbody)) return;
+        GameManager.Instance.playerInputController.DisControls();
 
         playerRigidbody.linearVelocity = Vector2.zero;
         playerRigidbody.constraints |= RigidbodyConstraints2D.FreezePositionX | RigidbodyConstraints2D.FreezePositionY;
@@ -27,6 +28,7 @@ public class Hand : MonoBehaviour
         if (player == null || landingPoint == null) yield break;
         Vector3 handStartPosition = transform.position;
 
+        AudioManager.Instance.PlaySFX("hand");
         if (moveDuration <= 0f)
         {
             transform.position = landingPoint.position;
@@ -68,6 +70,8 @@ public class Hand : MonoBehaviour
     {
         if (player == null) return;
         if (!player.TryGetComponent(out Rigidbody2D playerRigidbody)) return;
+
+        GameManager.Instance.playerInputController.EnControls();
 
         playerRigidbody.constraints = RigidbodyConstraints2D.FreezeRotation;
     }

@@ -53,7 +53,14 @@ public class Player_LocomotionState : PlayerState
 
         GravityControl();
     }
-
+    public override void AnimationEvent(string actionName)
+    {
+        base.AnimationEvent(actionName);
+        if (actionName == "walk")
+        {
+            AudioManager.Instance.PlaySFX("walk");
+        }
+    }
     protected virtual void GravityControl()
     {
         if (player.rgb2d.linearVelocityY < 0 && player.rgb2d.gravityScale != (defaultGravity * gravityMultiplier))
@@ -74,6 +81,7 @@ public class Player_LocomotionState : PlayerState
                 {
                     player.rgb2d.linearVelocityY = jumpForce;
                     player.ConsumeCoyoteTime();
+                    AudioManager.Instance.PlaySFX("jump");
                 }
             }
         }

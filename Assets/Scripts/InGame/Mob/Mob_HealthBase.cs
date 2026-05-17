@@ -5,6 +5,7 @@ using UnityEngine;
 public class Mob_HealthBase : MonoBehaviour, IHitable
 {
     protected Mob mob;
+    public bool canDestroyable = false;
 
     public float currentHealth = 0;
     public ParticleSystem deathParticle;
@@ -83,6 +84,7 @@ public class Mob_HealthBase : MonoBehaviour, IHitable
             deathParticle.Play();
         }
 
+        if(canDestroyable)
         Destroy(gameObject);
     }
     private IEnumerator HitImpactTimer()
