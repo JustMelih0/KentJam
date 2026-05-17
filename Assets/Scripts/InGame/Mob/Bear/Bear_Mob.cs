@@ -7,9 +7,21 @@ public class Bear_Mob : DefaultMob, IActivate
     public GameObject eyeParticle;
     public GameObject head;
     public ParticleSystem sleepParticle;
+    public float standingColliderYOffset = 0f;
 
     private Transform playerOnBear;
     private Vector2 lastPosition;
+    private Vector2 defaultColliderOffset;
+
+    protected override void InitComponents()
+    {
+        base.InitComponents();
+
+        if (boxCollider2D != null)
+        {
+            defaultColliderOffset = boxCollider2D.offset;
+        }
+    }
 
     protected override void Start()
     {
@@ -39,6 +51,21 @@ public class Bear_Mob : DefaultMob, IActivate
     {
         stateMachine.Brain("Sleep");
     }
+
+    public void SetStandingColliderOffset()
+    {
+        if (boxCollider2D == null) return;
+
+        boxCollider2D.offset = defaultColliderOffset + Vector2.up * standingColliderYOffset;
+    }
+
+    public void ResetColliderOffset()
+    {
+        if (boxCollider2D == null) return;
+
+        boxCollider2D.offset = defaultColliderOffset;
+    }
+
     protected override void OnCollisionEnter2D(Collision2D other)
     {
         base.OnCollisionEnter2D(other);

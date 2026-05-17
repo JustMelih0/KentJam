@@ -78,11 +78,14 @@ public class UIScreenFader : MonoBehaviour
     public void Close(Action onComplete)
     {
         if (CachePositions() == false)
+        {
+            onComplete?.Invoke();
             return;
+        }
 
         currentTween?.Kill();
         SetImagesActive(true);
-        AudioManager.Instance.PlaySFX("fadein");
+        AudioManager.Instance?.PlaySFX("fadein");
 
         Sequence sequence = DOTween.Sequence();
         sequence.Join(upperRect.DOAnchorPos(upperClosedPosition, duration).SetEase(closeEase));

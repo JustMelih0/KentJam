@@ -41,6 +41,7 @@ public class AO_Fountain : ActivatableObject
             waterParticle.Play();
         }
 
+        CameraController.Instance.Shake(0.1f, 0.3f);
         waterTargetPosition = waterStartPosition + Vector3.up * waterRiseHeight;
     }
 

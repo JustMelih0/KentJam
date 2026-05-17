@@ -54,7 +54,11 @@ public class Bear_SleepState : MobState
         mob.FaceToTarget(bear_Mob.targetMovePoint.position);
         if(noWakeAnim == false)
             mob.anim.SetTrigger("Wake");
-        else moveTarget = true; 
+        else
+        {
+            bear_Mob.SetStandingColliderOffset();
+            moveTarget = true;
+        }
         wake = true;
 
         bear_Mob.sleepParticle.Stop();
@@ -66,6 +70,7 @@ public class Bear_SleepState : MobState
         bear_Mob.sleepParticle.Play();
         wake = false;
         moveTarget = false;
+        bear_Mob.ResetColliderOffset();
         if(bear_Mob.head)
             bear_Mob.head.SetActive(false);
     }
@@ -76,6 +81,7 @@ public class Bear_SleepState : MobState
         {
             if(bear_Mob.head)
                 bear_Mob.head.SetActive(true);
+            bear_Mob.SetStandingColliderOffset();
             moveTarget = true;
         }else if (actionName == "sleep")
         {
@@ -100,6 +106,7 @@ public class Bear_SleepState : MobState
         {
             wake = false;
             moveTarget = false;
+            bear_Mob.ResetColliderOffset();
             if(bear_Mob.head)
                 bear_Mob.head.SetActive(false);
             mob.anim.SetFloat("HorizontalInput", 0);
@@ -107,6 +114,7 @@ public class Bear_SleepState : MobState
             if(canFallPoint)
             {
                 bear_Mob.col.isTrigger = true;
+                Destroy(mob.gameObject, 1f);
             }
             bear_Mob.sleepParticle.Play();
             return;

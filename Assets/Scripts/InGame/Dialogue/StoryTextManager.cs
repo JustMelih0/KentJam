@@ -9,7 +9,6 @@ public class StoryTextManager : MonoBehaviour
 
     [SerializeField] private GameObject textPanel;
     [SerializeField] private TextMeshProUGUI storyText;
-    [SerializeField] private float minLineDuration = 1.5f;
     [SerializeField] private float extraDelayBetweenLines = 0.35f;
     [SerializeField] private float showDuration = 0.25f;
     [SerializeField] private float hiddenScale = 0.92f;

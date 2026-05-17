@@ -143,7 +143,6 @@ public class AudioManager : MonoBehaviour
         }
         else
         {
-            Debug.Log("ses çaldı: " + s.clip.name);
             sfxSource.PlayOneShot(s.clip);
         }
     }

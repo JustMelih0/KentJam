@@ -1240,6 +1240,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: BearArea
       objectReference: {fileID: 0}
+    - target: {fileID: 2038487536019561482, guid: ec9d83b3a59d3b0458c4be31ec99de01, type: 3}
+      propertyPath: standingColliderYOffset
+      value: 0.31
+      objectReference: {fileID: 0}
     - target: {fileID: 7564905884285073457, guid: ec9d83b3a59d3b0458c4be31ec99de01, type: 3}
       propertyPath: m_LocalPosition.x
       value: -6.6

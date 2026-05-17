@@ -1635,10 +1635,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 1934143209503720594, guid: 915251cce3fcb8b47928730ca505c628, type: 3}
-      propertyPath: m_Volume
-      value: 0.7
-      objectReference: {fileID: 0}
     - target: {fileID: 5378981725499951163, guid: 915251cce3fcb8b47928730ca505c628, type: 3}
       propertyPath: m_LocalPosition.x
       value: 3.15094
@@ -1817,7 +1813,7 @@ MonoBehaviour:
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
-          m_StringArgument: Level1
+          m_StringArgument: Story
           m_BoolArgument: 0
         m_CallState: 2
 --- !u!114 &858061310
