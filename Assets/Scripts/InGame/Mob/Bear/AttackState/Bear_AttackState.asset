@@ -12,3 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: af146c0972ee3494fba062b260ffc435, type: 3}
   m_Name: Bear_AttackState
   m_EditorClassIdentifier: Assembly-CSharp::Bear_AttackState
+  woodBreakParticle: {fileID: 6415773247088889660, guid: 1530e4018e7cdf445ac0a550d8bf1f0c, type: 3}
