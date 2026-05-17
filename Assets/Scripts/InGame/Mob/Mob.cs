@@ -9,6 +9,7 @@ public class Mob : MonoBehaviour
     [HideInInspector] public Animator anim;
     [HideInInspector] public SpriteRenderer spriteRenderer;
     [HideInInspector] public BoxCollider2D boxCollider2D;
+    [HideInInspector] public Collider2D col;
     [HideInInspector] public Mob_HealthBase mob_HealthBase;
 
     protected StateMachine stateMachine;
@@ -39,6 +40,7 @@ public class Mob : MonoBehaviour
         TryGetComponent(out boxCollider2D);
         TryGetComponent(out mob_HealthBase);
         TryGetComponent(out stateMachine);
+        TryGetComponent(out col);
     }
     protected virtual void Start()
     {

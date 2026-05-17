@@ -4,6 +4,7 @@ using UnityEngine;
 public class Bear_SleepState : MobState
 {
     [SerializeField] protected bool noWakeAnim = false;
+    public bool canFallPoint = false;
     private const float StopDistance = 0.1f;
 
     private bool wake = false;
@@ -27,7 +28,7 @@ public class Bear_SleepState : MobState
         if(moveTarget == true) mob.anim.SetFloat("HorizontalInput", 1);
         else mob.anim.SetFloat("HorizontalInput", 0);
 
-        if(moveTarget)
+        if(moveTarget && bear_Mob.head)
         {
             bear_Mob.head.SetActive(true);
         }
@@ -65,14 +66,16 @@ public class Bear_SleepState : MobState
         bear_Mob.sleepParticle.Play();
         wake = false;
         moveTarget = false;
-        bear_Mob.head.SetActive(false);
+        if(bear_Mob.head)
+            bear_Mob.head.SetActive(false);
     }
     public override void AnimationEvent(string actionName)
     {
         base.AnimationEvent(actionName);
         if (actionName == "Wake")
         {
-            bear_Mob.head.SetActive(true);
+            if(bear_Mob.head)
+                bear_Mob.head.SetActive(true);
             moveTarget = true;
         }else if (actionName == "sleep")
         {
@@ -97,9 +100,14 @@ public class Bear_SleepState : MobState
         {
             wake = false;
             moveTarget = false;
-            bear_Mob.head.SetActive(false);
+            if(bear_Mob.head)
+                bear_Mob.head.SetActive(false);
             mob.anim.SetFloat("HorizontalInput", 0);
             mob.rgb2d.linearVelocityX = 0f;
+            if(canFallPoint)
+            {
+                bear_Mob.col.isTrigger = true;
+            }
             bear_Mob.sleepParticle.Play();
             return;
         }
@@ -110,7 +118,8 @@ public class Bear_SleepState : MobState
     public override void ExitState()
     {
         base.ExitState();
-        bear_Mob.head.SetActive(false);
+        if(bear_Mob.head)
+            bear_Mob.head.SetActive(false);
         mob.rgb2d.linearVelocityX = 0f;
     }
 }

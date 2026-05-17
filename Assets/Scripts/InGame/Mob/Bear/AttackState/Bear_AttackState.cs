@@ -19,6 +19,7 @@ public class Bear_AttackState : MobState
         if(col.gameObject)
         {
             Instantiate(woodBreakParticle, col.gameObject.transform.position, Quaternion.identity);
+            CameraController.Instance.Shake(0.1f, 0.3f);
             Destroy(col.gameObject);
         }
     }
